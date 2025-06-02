@@ -1,7 +1,8 @@
 # Bank Marketing Classifier Comparison
 
 ## 📌 Overview
-This project compares four supervised machine learning classifiers—Logistic Regression, K-Nearest Neighbors (KNN), Decision Trees, and Support Vector Machines (SVM)—on a Portuguese bank marketing dataset to predict if a customer will subscribe to a term deposit. The analysis helps optimize telemarketing efforts, reduce costs, and increase subscription conversion rates.
+This project compares four supervised machine learning classifiers — Logistic Regression, K-Nearest Neighbors (KNN), Decision Trees, and Support Vector Machines (SVM)—on a Kagel bank marketing dataset to predict if a customer will subscribe to a term deposit. 
+The analysis helps optimize telemarketing efforts, reduce costs, and increase subscription conversion rates.
 
 ## 📁 Dataset
 - Source: [UCI Bank Marketing Dataset](https://archive.ics.uci.edu/ml/datasets/bank+marketing)
