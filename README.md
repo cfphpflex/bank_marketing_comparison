@@ -1,7 +1,7 @@
 # Bank Marketing Classifier Comparison
 
 ## 📌 Overview
-This project compares four supervised machine learning classifiers — Logistic Regression, K-Nearest Neighbors (KNN), Decision Trees, and Support Vector Machines (SVM)—on a Kagel bank marketing dataset to predict if a customer will subscribe to a term deposit. 
+This project compares four supervised machine learning classifiers — Logistic Regression, K-Nearest Neighbors (KNN), Decision Trees, and Support Vector Machines (SVM)—on a UCI bank marketing dataset to predict if a customer will subscribe to a term deposit. 
 The analysis helps optimize telemarketing efforts, reduce costs, and increase subscription conversion rates.
 
 ## 📁 Dataset
@@ -11,97 +11,85 @@ The analysis helps optimize telemarketing efforts, reduce costs, and increase su
 - Target: `y` (binary) — whether the client subscribed to a term deposit (`yes`/`no`).
 
 ## 📊 Models Compared
+
 | Model                | Cross-Validation Score | Accuracy | Precision (1) | Recall (1) | F1-Score (1) |
 |----------------------|------------------------|----------|----------------|------------|--------------|
-| Logistic Regression  | 0.9049                 | 0.8983   | 0.5795         | 0.3355     | 0.4250       |
-| K-Nearest Neighbors  | 0.8903                 | 0.8858   | 0.4746         | 0.1842     | 0.2654       |
-| Decision Tree        | 0.8584                 | 0.8666   | 0.4014         | 0.3882     | 0.3946       |
-| Support Vector Machine | 0.8897               | 0.8924   | 0.5500         | 0.2171     | 0.3113       |
+| Logistic Regression  | 0.9134                 | 0.8887   | 0.5041         | 0.4079     | 0.4509       |
+| K-Nearest Neighbors  | 0.9186                 | 0.8688   | 0.3587         | 0.2171     | 0.2705       |
+| Decision Tree        | 0.9007                 | 0.8548   | 0.3770         | 0.4539     | 0.4119       |
+| Support Vector Machine | **0.9191**           | **0.8924** | **0.5283**     | 0.3684     | **0.4341**   |
 
 ## 📈 Visualizations
 - Count plots for class balance and categorical variables
 - Heatmap of correlations
-- ROC Curve for Logistic Regression showing strong model performance
+- ROC Curve and Precision-Recall Curve for best models
 - Confusion matrices for all models
 
 ## 📋 Key Findings
 
-### Model Performance Comparison
+### 🔍 Model Performance Comparison
 
-1. **Logistic Regression**
-   - Best overall performance with 90.49% cross-validation score
-   - Highest precision (92.04%) for negative class
-   - Good balance between precision and recall
-   - Confusion Matrix: 1168 true negatives, 51 true positives
+1. **SVM**
+   - ✅ Highest cross-validation score (91.91%)
+   - ✅ Best precision and F1-score for positive class
+   - Excellent overall balance with lowest false negatives among models
+   - Confusion Matrix: 1155 TN, 56 TP
 
-2. **SVM**
-   - Second-best performance with 88.97% cross-validation score
-   - Highest precision (90.83%) for negative class
-   - Good at identifying non-subscribers
-   - Confusion Matrix: 1178 true negatives, 33 true positives
+2. **Logistic Regression**
+   - Strong general performance with 91.34% CV score
+   - Highest accuracy for non-subscribers (class 0)
+   - Confusion Matrix: 1144 TN, 62 TP
 
-3. **KNN**
-   - Third-best performance with 89.03% cross-validation score
-   - Good precision (90.45%) for negative class
-   - Lower recall for positive class
-   - Confusion Matrix: 1174 true negatives, 28 true positives
+3. **Decision Tree**
+   - Most balanced recall for class 1
+   - Captures more true positives (69) than KNN or LR
+   - Confusion Matrix: 1091 TN, 69 TP
 
-4. **Decision Tree**
-   - Base model performance: 85.84% cross-validation score
-   - Optimized model (depth=2):
-     * Training Accuracy: 89.89%
-     * Test Accuracy: 89.61%
-     * Good precision (92.31%) for negative class
-     * Balanced performance between classes
-   - Confusion Matrix: 1117 true negatives, 59 true positives
-   - Shows good generalization with minimal overfitting (train-test gap < 0.3%)
+4. **KNN**
+   - Lowest recall for class 1 (only 33 TPs)
+   - May underperform with high-dimensional or imbalanced data
+   - Confusion Matrix: 1146 TN, 33 TP
 
-### Key Observations
-1. All models show strong performance in identifying non-subscribers (class 0)
-2. Models struggle with identifying subscribers (class 1), showing lower recall
-3. Class imbalance is evident in the dataset (1205 non-subscribers vs 152 subscribers)
-4. Logistic Regression provides the best balance between precision and recall
-5. Decision Tree with depth=2 shows promising results with minimal overfitting
+### 🔑 Observations
 
-## 📌 Next Steps
-- Apply **class weights** or **SMOTE** to improve recall on the minority class.
-- Experiment with **ensemble models** (e.g., Random Forest, XGBoost).
-- Explore **real-time deployment** and **feature engineering** for campaign metadata.
+- All models are highly accurate in identifying **non-subscribers**.
+- **Subscribers (class 1)** remain harder to predict, reflecting dataset imbalance.
+- **SVM** and **Logistic Regression** offer the best tradeoff between precision and recall.
+- **Decision Tree** can be considered when interpretability is essential.
 
 ## 📘 How to Run
-Open the Jupyter Notebook:  
+Open the notebook here:  
 📎 [`bank_marketing_comparison.ipynb`](./bank_marketing_comparison.ipynb)
 
- 
-## Recommendations
+---
 
-1. **Model Selection**
-   - Use Logistic Regression as the primary model due to its balanced performance
-   - Consider the optimized Decision Tree (depth=2) as a secondary model
-   - Implement ensemble methods to improve prediction of positive class
+## ✅ Recommendations
 
-2. **Feature Engineering**
-   - Investigate feature importance to identify key predictors
-   - Consider creating interaction terms between important features
-   - Explore feature selection techniques to reduce dimensionality
+### 1. Model Selection
+- **Primary model**: SVM (highest F1 and precision on minority class)
+- **Secondary model**: Logistic Regression (more interpretable, slightly lower performance)
+- **Fallback**: Decision Tree (for explainability or business rule generation)
 
-3. **Data Collection**
-   - Gather more data for the positive class to address imbalance
-   - Consider collecting additional customer behavior metrics
-   - Implement tracking of campaign timing and frequency
+### 2. Feature Engineering
+- Explore additional interactions (e.g., `job x education`)
+- Use SHAP or feature importances to reduce dimensionality
+- Engineer time-based or frequency features if available
 
-4. **Implementation Strategy**
-   - Use model predictions to prioritize high-probability customers
-   - Implement A/B testing for different marketing approaches
-   - Monitor model performance regularly and retrain as needed
-   - Consider using the Decision Tree model for its interpretability
+### 3. Handling Imbalance
+- SMOTE was helpful — keep using it
+- Explore hybrid over/under sampling or ensemble boosting (e.g., AdaBoost, Balanced Random Forest)
 
-## Notebook
-The complete analysis can be found in [bank_marketing_comparison.ipynb](bank_marketing_comparison.ipynb)
+### 4. Deployment Strategy
+- Use models to score prospects before campaign outreach
+- Apply A/B testing on model-guided vs. unguided calls
+- Monitor false positives to control marketing costs
 
-## Next Steps
-- Implement ensemble methods
-- Gather additional campaign data
-- Explore feature engineering opportunities
-- Consider real-time prediction capabilities
-- Further optimize Decision Tree hyperparameters
+---
+
+## 🔜 Next Steps
+- Apply **ensemble models**: XGBoost, LightGBM, RandomForest
+- Try **class weighting** as an alternative to SMOTE
+- Evaluate **model drift** with new campaign cycles
+- Improve **recall** further through deeper tuning
+
+---
